@@ -73,6 +73,14 @@ class ErrorHandler
 	 */
 	public function handleException(Exception $exception, $code = null)
 	{
+		if ($exception instanceof NotFoundHttpException) {
+			return $this->handleMissing($exception);
+		}
+		
+		if ($exception instanceof TokenMismatchException) {
+			return $this->handleTokenMismatch($exception);
+		}
+		
 		try {
 			if ($this->exceptionHasBeenHandled($exception)) {
 				return null;
