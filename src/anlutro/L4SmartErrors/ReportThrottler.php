@@ -28,7 +28,7 @@ class ReportThrottler
 		$this->config = $config;
 		$this->files = $files;
 		$this->maxAgeSeconds = is_int($maxAgeSeconds) ? $maxAgeSeconds :
-			$this->config->get('smarterror::throttle-age', 600);
+			$this->config->get('smarterror.throttle-age', 600);
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ReportThrottler
 			return false;
 		}
 
-		$path = $this->config->get('smarterror::storage-path');
+		$path = $this->config->get('smarterror.storage-path');
 		
 		// create a basic hash of the exception. this should include the stack
 		// trace and message, making it more or less a unique identifier
