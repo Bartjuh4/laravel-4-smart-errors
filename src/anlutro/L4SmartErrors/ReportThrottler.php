@@ -53,6 +53,8 @@ class ReportThrottler
 			. $exception->getTraceAsString();
 
 		$hash = base64_encode($string);
+		
+		$shouldReport = true;
 
 		// if the file exists, read from it and check if the hash of the current
 		// exception is the same as the previous one.
@@ -63,7 +65,11 @@ class ReportThrottler
 			// don't check age if the file is empty
 			if ($data) {
 				$age = $this->getPreviousExceptionAge($data, $hash);
-				return $age === false || $age > $this->maxAgeSeconds;
+				
+				// override default behavior of shouldReport
+				// but not return the boolean yet, we still need to write this
+				// exception to the log
+				$shouldReport = ($age === false || $age > $this->maxAgeSeconds);
 			}
 		}
 
@@ -76,7 +82,7 @@ class ReportThrottler
 			$this->files->put($path, json_encode($data));
 		}
 
-		return true;
+		return $shouldReport;
 	}
 
 	/**
