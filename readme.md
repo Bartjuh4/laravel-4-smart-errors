@@ -11,7 +11,10 @@ public function render($request, Exception $e)
 {
 	$errorHandler = \App::make('anlutro\L4SmartErrors\ErrorHandler');
 	$response = $errorHandler->handleException($e);
-	if ($response instanceof \Illuminate\Http\Response) {
+	
+	if ($response === NULL) {
+		return parent::render($request, $e);
+	} else if ($response instanceof \Illuminate\Http\Response) {
 		return $response;
 	} else {
 		return new \Illuminate\Http\Response($response);
