@@ -9,8 +9,13 @@ app/Exceptions/Handler.php
 ```php
 public function render($request, Exception $e)
 {
-	$errorHandler = App::make('anlutro\L4SmartErrors\ErrorHandler');
-	return $errorHandler->handleException($e);
+	$errorHandler = \App::make('anlutro\L4SmartErrors\ErrorHandler');
+	$response = $errorHandler->handleException($e);
+	if ($response instanceof \Illuminate\Http\Response) {
+		return $response;
+	} else {
+		return new \Illuminate\Http\Response($response);
+	}
 }
 ```
 
