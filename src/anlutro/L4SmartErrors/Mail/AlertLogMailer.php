@@ -35,7 +35,7 @@ class AlertLogMailer
 
 	public function send($email)
 	{
-		if ($this->app['config']->get('smarterror::force-email')) {
+		if ($this->app['config']->get('smarterror.force-email')) {
 			$this->app['config']->set('mail.pretend', false);
 		}
 
@@ -48,8 +48,8 @@ class AlertLogMailer
 		$env = $this->app->environment();
 		$subject = "[$env] Alert logged - ";
 		$subject .= $this->app['request']->root() ?: $this->app['config']->get('app.url');
-		$htmlView = $this->app['config']->get('smarterror::alert-email-view') ?: 'smarterror::alert-email';
-		$plainView = $this->app['config']->get('smarterror::alert-email-view-plain') ?: 'smarterror::alert-email-plain';
+		$htmlView = $this->app['config']->get('smarterror.alert-email-view') ?: 'smarterror::alert-email';
+		$plainView = $this->app['config']->get('smarterror.alert-email-view-plain') ?: 'smarterror::alert-email-plain';
 
 		$callback = function(Message $msg) use($email, $subject) {
 			$msg->to($email)->subject($subject);

@@ -84,7 +84,7 @@ class ErrorHandler
 					->log($exception);
 			}
 
-			$email = $this->app['config']->get('smarterror::dev-email');
+			$email = $this->app['config']->get('smarterror.dev-email');
 
 			if ($email && $this->shouldSendEmail($exception)) {
 				$appInfoGenerator = $this->makeAppInfoGenerator();
@@ -114,14 +114,14 @@ class ErrorHandler
 	 */
 	public function handleAlert($message, $context)
 	{
-		$email = $this->app['config']->get('smarterror::dev-email');
+		$email = $this->app['config']->get('smarterror.dev-email');
 
 		if ($this->app['config']->get('app.debug') !== false || !$email) {
 			return;
 		}
 
 		$forcing = false;
-		if ($this->app['config']->get('smarterror::force-email') !== false) {
+		if ($this->app['config']->get('smarterror.force-email') !== false) {
 			$forcing = true;
 			$previousPretendState = $this->app['config']->get('mail.pretend');
 			$this->app['config']->set('mail.pretend', false);
@@ -309,7 +309,7 @@ class ErrorHandler
 	 */
 	protected function makeQueryLogPresenter()
 	{
-		if (!$this->app['config']->get('smarterror::include-query-log')) {
+		if (!$this->app['config']->get('smarterror.include-query-log')) {
 			return null;
 		}
 

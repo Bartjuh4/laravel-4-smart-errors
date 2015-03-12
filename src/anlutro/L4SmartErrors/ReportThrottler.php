@@ -46,7 +46,7 @@ class ReportThrottler
 		}
 
 		$path = $this->config->get('smarterror::storage-path');
-
+		
 		// create a basic hash of the exception. this should include the stack
 		// trace and message, making it more or less a unique identifier
 		$string = $exception->getMessage() . $exception->getCode()

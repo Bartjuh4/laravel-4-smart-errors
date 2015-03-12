@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Laravel 4 Smart Errors
  *
@@ -9,11 +10,12 @@
 
 namespace anlutro\L4SmartErrors;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\ServiceProvider;
 
-class L4SmartErrorsServiceProvider extends ServiceProvider
-{
+class L4SmartErrorsServiceProvider extends ServiceProvider {
+
 	/**
 	 * Indicates if loading of the provider is deferred.
 	 *
@@ -40,11 +42,20 @@ class L4SmartErrorsServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->package('anlutro/l4-smart-errors', 'smarterror');
+		DB::enableQueryLog();
 
-		$this->registerErrorHandler();
-		$this->registerTokenMismatchHandler();
-		$this->registerMissingHandler();
+		//$this->package('anlutro/l4-smart-errors', 'smarterror');
+		$this->loadViewsFrom(__DIR__ . '/../../views', 'smarterror');
+		$this->loadTranslationsFrom(__DIR__ . '/../../lang', 'smarterror');
+
+		$this->publishes([
+			__DIR__ . '/../../config/config.php' => config_path('smarterror.php'),
+				], 'smarterror');
+
+
+		//$this->registerErrorHandler();
+		//$this->registerTokenMismatchHandler();
+		//$this->registerMissingHandler();
 		$this->registerAlertLogListener();
 	}
 
@@ -92,4 +103,5 @@ class L4SmartErrorsServiceProvider extends ServiceProvider
 	{
 		return array('smarterror');
 	}
+
 }

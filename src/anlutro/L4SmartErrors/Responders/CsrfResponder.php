@@ -40,7 +40,7 @@ class CsrfResponder extends AbstractResponder
 				->withErrors($this->app['translator']->get('smarterror::error.csrfText'));
 		}
 
-		if ($notDebug && $view = $this->app['config']->get('smarterror::csrf-view')) {
+		if ($notDebug && $view = $this->app['config']->get('smarterror.csrf-view')) {
 			return Response::view($view, array(
 				'referer' => $request->header('referer'),
 			), 400);

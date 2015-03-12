@@ -41,11 +41,11 @@ class ExceptionMailer
 
 	public function send($email)
 	{
-		if ($this->app['config']->get('smarterror::force-email')) {
+		if ($this->app['config']->get('smarterror.force-email')) {
 			$this->app['config']->set('mail.pretend', false);
 		}
 
-		if ($this->app['config']->get('smarterror::expand-stack-trace')) {
+		if ($this->app['config']->get('smarterror.expand-stack-trace')) {
 			$this->exception->setDescriptive(true);
 		}
 
@@ -61,8 +61,8 @@ class ExceptionMailer
 		$exceptionName = $this->getExceptionBaseName($this->exception->getException());
 		$subject = "[$env] $exceptionName - ";
 		$subject .= $this->app['request']->root() ?: $this->app['config']->get('app.url');
-		$htmlView = $this->app['config']->get('smarterror::error-email-view') ?: 'smarterror::error-email';
-		$plainView = $this->app['config']->get('smarterror::error-email-view-plain') ?: 'smarterror::error-email-plain';
+		$htmlView = $this->app['config']->get('smarterror.error-email-view') ?: 'smarterror::error-email';
+		$plainView = $this->app['config']->get('smarterror.error-email-view-plain') ?: 'smarterror::error-email-plain';
 
 		$callback = function(Message $msg) use($email, $subject) {
 			$msg->to($email)->subject($subject);

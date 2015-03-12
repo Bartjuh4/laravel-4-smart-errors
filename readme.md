@@ -2,6 +2,18 @@
 
 Small system for showing a very generic error message to your end-users while sending an email to yourself with all relevant information about the exception.
 
+### LARAVEL 5 NOTE:
+Change the exception handler function render to the following:
+
+app/Exceptions/Handler.php
+```php
+public function render($request, Exception $e)
+{
+	$errorHandler = App::make('anlutro\L4SmartErrors\ErrorHandler');
+	return $errorHandler->handleException($e);
+}
+```
+
 ![Example email](http://i.imgur.com/yIvK8EV.png)
 
 - Uncaught exceptions send an email with detailed information (referrer, route name/action, any input given and more)

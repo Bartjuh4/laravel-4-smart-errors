@@ -39,7 +39,7 @@ class ErrorHandlingTest extends PkgAppTestCase
 			return 'Logged!';
 		});
 
-		$storPath = $this->app['config']->get('smarterror::storage-path');
+		$storPath = $this->app['config']->get('smarterror.storage-path');
 		$this->app['files']->put($storPath, '{}');
 	}
 

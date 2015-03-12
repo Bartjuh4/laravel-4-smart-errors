@@ -35,7 +35,7 @@ class AppInfoGenerator
 		$this->addData('Environment', $this->app->environment());
 		$this->addData('Hostname', gethostname());
 
-		$timeFormat = $this->app['config']->get('smarterror::date-format') ?: 'Y-m-d H:i:s e';
+		$timeFormat = $this->app['config']->get('smarterror.date-format') ?: 'Y-m-d H:i:s e';
 		$this->addData('Time', date($timeFormat));
 
 		if ($this->console) {

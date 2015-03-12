@@ -41,12 +41,12 @@ class ExceptionResponder extends AbstractResponder
 			$statusCode = 500;
 			$headers = array();
 		}
-
+		
 		// if debug is false, show the friendly error message
 		if ($this->app['config']->get('app.debug') === false) {
 			if ($this->requestIsJson()) {
 				return Response::json(array('errors' => array($this->app['translator']->get('smarterror::genericErrorTitle'))), $statusCode, $headers);
-			} else if ($view = $this->app['config']->get('smarterror::error-view')) {
+			} else if ($view = $this->app['config']->get('smarterror.error-view')) {
 				return Response::view($view, array(
 					'referer' => $this->app['request']->header('referer'),
 				), $statusCode, $headers);

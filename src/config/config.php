@@ -43,7 +43,7 @@ return array(
 	'include-query-log' => false,
 
 	// Path to JSON file where metadata is stored.
-	'storage-path' => storage_path('meta/l4-smart-errors.json'),
+	'storage-path' => storage_path('app/l4-smart-errors.json'),
 
 	// The error handler has a throttle in place to prevent the same exception
 	// from being emailed over and over. This is the number of seconds that must
