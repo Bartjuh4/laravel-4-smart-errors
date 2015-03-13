@@ -50,37 +50,9 @@ class L4SmartErrorsServiceProvider extends ServiceProvider {
 
 		$this->publishes([
 			__DIR__ . '/../../config/config.php' => config_path('smarterror.php'),
-				], 'smarterror');
+				], 'config');
 
-
-		//$this->registerErrorHandler();
-		//$this->registerTokenMismatchHandler();
-		//$this->registerMissingHandler();
 		$this->registerAlertLogListener();
-	}
-
-	protected function registerErrorHandler()
-	{
-		$app = $this->app;
-		$this->app->error(function(\Exception $exception, $code) use ($app) {
-			return $app['smarterror']->handleException($exception, $code);
-		});
-	}
-
-	protected function registerTokenMismatchHandler()
-	{
-		$app = $this->app;
-		$this->app->error(function(TokenMismatchException $exception, $code) use ($app) {
-			return $app['smarterror']->handleTokenMismatch($exception);
-		});
-	}
-
-	protected function registerMissingHandler()
-	{
-		$app = $this->app;
-		$this->app->missing(function($exception) use ($app) {
-			return $app['smarterror']->handleMissing($exception);
-		});
 	}
 
 	protected function registerAlertLogListener()

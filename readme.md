@@ -3,24 +3,31 @@
 Small system for showing a very generic error message to your end-users while sending an email to yourself with all relevant information about the exception.
 
 ### LARAVEL 5 NOTE:
-Change the exception handler function render to the following:
+Use the Smart Errors exception handler from `App/Exceptions/Handler.php`.
 
-app/Exceptions/Handler.php
-```php
-public function render($request, Exception $e)
-{
-	$errorHandler = \App::make('anlutro\L4SmartErrors\ErrorHandler');
-	$response = $errorHandler->handleException($e);
-	
-	if ($response === NULL) {
-		return parent::render($request, $e);
-	} else if ($response instanceof \Illuminate\Http\Response) {
-		return $response;
-	} else {
-		return new \Illuminate\Http\Response($response);
-	}
-}
-```
+    ```php
+    # DELETE this line
+    use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+    ```
+
+    ```php
+    # ADD this line instead
+    use anlutro\L4SmartErrors\SmartErrorsExceptionHandler as ExceptionHandler;
+    ```
+
+    After this change, your file should look like this:
+
+    ```php
+    <?php namespace App\Exceptions;
+
+    use Exception;
+    use anlutro\L4SmartErrors\SmartErrorsExceptionHandler as ExceptionHandler;
+
+    class Handler extends ExceptionHandler {
+        ...
+    }
+
+    ```
 
 ![Example email](http://i.imgur.com/yIvK8EV.png)
 
